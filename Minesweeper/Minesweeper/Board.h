@@ -16,6 +16,7 @@ public:
 	int gridn[6][6] = { 0 };
 	int i, j, k, l;
 	int x, y, xs, ys;
+	int xf, yf;
 	int mine = 0;
 	int nof;
 	int a = 0;
