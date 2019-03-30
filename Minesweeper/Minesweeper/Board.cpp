@@ -62,6 +62,12 @@ void Board::FirstStep()
 		}
 		else break;
 	}
+	
+	//storing xs,ys initial value to help revealing
+	//the starting boxes on MakeMap()
+	xf = xs;
+	yf = ys;
+	
 	xs = xs - 1;
 	ys = ys - 1;
 	srand(time(NULL));
@@ -109,11 +115,29 @@ void Board::MakeHints()
 void Board::MakeMap()
 {
 	//storing the hints value as the bombs stored with * symbol in ascii
+	//adding the condition when there's a 0 value on the revealed squares,
+	//passing its neighbouring's value to be revelead too
 	for (i = xs - 1; i <= xs + 1; i++)
 	{
 		for (j = ys - 1; j <= ys + 1; j++)
 		{
-			if (grid[i][j] != 42) field[i][j] = grid[i][j];
+			if(grid[i][j] != 42){
+            			if(yf == 1 && j == -1) continue;
+            			else if(yf == 6 && j == 6) continue;
+            			field[i][j] = grid[i][j];
+				//if the box's value is 0, then passing
+				//its neighbouring's value to char field
+            			if(field[i][j] == 48){
+            				field[i-1][j] = grid[i-1][j];
+            				field[i+1][j] = grid[i+1][j];
+            				field[i][j+1] = grid[i][j+1];
+            				field[i][j-1] = grid[i][j-1];
+					field[i-1][j+1] = grid[i-1][j+1];
+					field[i-1][j-1] = grid[i-1][j-1];
+					field[i+1][j+1] = grid[i+1][j+1];
+					field[i+1][j-1] = grid[i+1][j-1];
+				}	
+			}
 		}
 	}
 
